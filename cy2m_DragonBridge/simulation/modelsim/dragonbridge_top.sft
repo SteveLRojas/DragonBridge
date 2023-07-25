@@ -1,0 +1,5 @@
+set tool_name "ModelSim-Altera (SystemVerilog)"
+set corner_file_list {
+	{{"Slow Model"} {dragonbridge_top.svo dragonbridge_top_v.sdo}}
+	{{"Fast Model"} {dragonbridge_top_fast.svo dragonbridge_top_v_fast.sdo}}
+}

@@ -1,0 +1,27 @@
+
+State Machine - |dragonbridge_top|dragonbridge_fsm:dragonbridge_fsm_i|state
+Name state.S_I2C_AGENT_ACK state.S_I2C_HOST_ACK state.S_I2C_READ_URQ state.S_I2C_READ_IGT state.S_I2C_WRITE_W state.S_I2C_WRITE_GET state.S_I2C_STOP_W state.S_I2C_STOP_R state.S_I2C_START_W state.S_I2C_START_R state.S_I2C_SPEED_L state.S_I2C_SPEED_H state.S_SPI_TRANSFER_URQ state.S_SPI_TRANSFER_SGT state.S_SPI_TRANSFER_SRQ state.S_SPI_TRANSFER_GET state.S_SPI_CHIPSEL state.S_SPI_MODE state.S_SPI_SPEED state.S_BAUD_L state.S_BAUD_H state.S_TEST_REQ state.S_TEST state.S_IDLE 
+state.S_IDLE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+state.S_TEST 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+state.S_TEST_REQ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+state.S_BAUD_H 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+state.S_BAUD_L 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+state.S_SPI_SPEED 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+state.S_SPI_MODE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+state.S_SPI_CHIPSEL 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+state.S_SPI_TRANSFER_GET 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+state.S_SPI_TRANSFER_SRQ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+state.S_SPI_TRANSFER_SGT 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+state.S_SPI_TRANSFER_URQ 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+state.S_I2C_SPEED_H 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+state.S_I2C_SPEED_L 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
+state.S_I2C_START_R 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+state.S_I2C_START_W 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+state.S_I2C_STOP_R 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+state.S_I2C_STOP_W 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+state.S_I2C_WRITE_GET 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+state.S_I2C_WRITE_W 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+state.S_I2C_READ_IGT 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+state.S_I2C_READ_URQ 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+state.S_I2C_HOST_ACK 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+state.S_I2C_AGENT_ACK 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 

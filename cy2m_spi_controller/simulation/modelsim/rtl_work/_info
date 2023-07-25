@@ -1,0 +1,128 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\Users\Steve\Workspace\cy2m_spi_controller\simulation\modelsim
+vcontroller_fsm
+I_94JhDWibLfP9LBgOS8Z?1
+V0<_XFAR];mT;W3>4fEKdO0
+Z1 dC:\Users\Steve\Workspace\cy2m_spi_controller\simulation\modelsim
+w1689877470
+8C:/Users/Steve/Workspace/cy2m_spi_controller/controller_fsm.v
+FC:/Users/Steve/Workspace/cy2m_spi_controller/controller_fsm.v
+L0 21
+Z2 OV;L;10.1d;51
+r1
+31
+Z3 o-vlog01compat -work work -O0
+Z4 !s92 -vlog01compat -work work +incdir+C:/Users/Steve/Workspace/cy2m_spi_controller -O0
+!i10b 1
+!s100 2SOD0V_geK5K:_SF8X:<h3
+!s85 0
+!s108 1690121625.554000
+!s107 C:/Users/Steve/Workspace/cy2m_spi_controller/controller_fsm.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/Steve/Workspace/cy2m_spi_controller|C:/Users/Steve/Workspace/cy2m_spi_controller/controller_fsm.v|
+!s101 -O0
+vspi_controller
+Ia^N]c>R>ABOB3H2dgS2;?1
+VAZP6IBT3N[aQJLmb^]CJo2
+R1
+w1690037493
+8C:/Users/Steve/Workspace/cy2m_spi_controller/top_level.v
+FC:/Users/Steve/Workspace/cy2m_spi_controller/top_level.v
+L0 21
+R2
+r1
+31
+R3
+R4
+!i10b 1
+!s100 =OPI0`HVcReijoRCZ;ZI22
+!s85 0
+!s108 1690121625.512000
+!s107 C:/Users/Steve/Workspace/cy2m_spi_controller/top_level.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/Steve/Workspace/cy2m_spi_controller|C:/Users/Steve/Workspace/cy2m_spi_controller/top_level.v|
+!s101 -O0
+vspi_host
+I^oEkfX[C<ChXd7=V56b190
+V3b1md5o7EMPnURQRX=;b03
+R1
+w1690034936
+8C:/Users/Steve/Workspace/cy2m_spi_controller/spi_host.v
+FC:/Users/Steve/Workspace/cy2m_spi_controller/spi_host.v
+L0 1
+R2
+r1
+31
+R3
+R4
+!i10b 1
+!s100 Sb5oSN]JhIcLzUJE2;WTJ1
+!s85 0
+!s108 1690121625.687000
+!s107 C:/Users/Steve/Workspace/cy2m_spi_controller/spi_host.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/Steve/Workspace/cy2m_spi_controller|C:/Users/Steve/Workspace/cy2m_spi_controller/spi_host.v|
+!s101 -O0
+vspi_master
+!i10b 1
+!s100 <@>=Mb:j;CY?UIV2LRO9?1
+ICbZY[KcCnmV[2LXm]X_Iz3
+VP`[CZ5Zj3>c4DOz57nVO]1
+R1
+Z5 w1689185610
+8C:/Users/Steve/Workspace/cy2m_spi_controller/spi_master.v
+FC:/Users/Steve/Workspace/cy2m_spi_controller/spi_master.v
+L0 1
+R2
+r1
+!s85 0
+31
+!s108 1690121625.727000
+!s107 C:/Users/Steve/Workspace/cy2m_spi_controller/spi_master.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/Steve/Workspace/cy2m_spi_controller|C:/Users/Steve/Workspace/cy2m_spi_controller/spi_master.v|
+!s101 -O0
+R3
+R4
+vtestbench
+DXx6 sv_std 3 std 0 22 F[19LRNL:5;XmIFh[XOPn1
+InObYeigia]L2ZkL<zYM0S1
+VhGfW:390DM[oDMzegDH9`2
+S1
+R1
+w1690121603
+8C:/Users/Steve/Workspace/cy2m_spi_controller/testbench.sv
+FC:/Users/Steve/Workspace/cy2m_spi_controller/testbench.sv
+L0 2
+R2
+r1
+31
+o-sv -work work -O0
+!i10b 1
+!s100 `>@TiX2RlIBgJISgzY>CV3
+!s105 testbench_sv_unit
+!s85 0
+!s108 1690121625.638000
+!s107 C:/Users/Steve/Workspace/cy2m_spi_controller/testbench.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/Steve/Workspace/cy2m_spi_controller|C:/Users/Steve/Workspace/cy2m_spi_controller/testbench.sv|
+!s101 -O0
+!s92 -sv -work work +incdir+C:/Users/Steve/Workspace/cy2m_spi_controller -O0
+vuart_gen2
+I@OCnEQAfH=OBVj5NNnO9m3
+V>kmU[5Yz;`<]2i^7ID]Kh3
+R1
+R5
+8C:/Users/Steve/Workspace/cy2m_spi_controller/uart_gen2.v
+FC:/Users/Steve/Workspace/cy2m_spi_controller/uart_gen2.v
+L0 1
+R2
+r1
+31
+R3
+R4
+!i10b 1
+!s100 CT8cBa3F[_a54d]LfAZl62
+!s85 0
+!s108 1690121625.434000
+!s107 C:/Users/Steve/Workspace/cy2m_spi_controller/uart_gen2.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/Steve/Workspace/cy2m_spi_controller|C:/Users/Steve/Workspace/cy2m_spi_controller/uart_gen2.v|
+!s101 -O0

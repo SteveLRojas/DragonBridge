@@ -1,0 +1,138 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: Esteban Looser Rojas (ELR)
+// 
+// Create Date:    12:27:23 07/12/2023 
+// Design Name:	spi_controller
+// Module Name:    top_level 
+// Project Name:	basys2_spi_controller
+// Target Devices: XC3S100E
+// Tool versions: ISE 14.7
+// Description: SPI master controlled by a UART
+//
+// Dependencies: spi_master, uart_gen2
+//
+// Revision: 
+// Revision 0.01 - File Created
+// Additional Comments: 
+//
+//////////////////////////////////////////////////////////////////////////////////
+module top_level(
+		input wire mclk,
+		input wire[3:0] button,
+		output wire[7:0] led,
+		
+		input wire rxd,
+		output wire txd,
+		
+		output wire cs_n,
+		output wire sck,
+		output wire mosi,
+		input wire miso,
+
+		//Hex display
+		output wire[3:0] seg_sel,
+		output wire[7:0] seg
+	);
+
+//####### IO Control #########################################################
+	wire[3:0] button_d;
+	wire rst;
+
+	button_debounce debounce_inst(.clk(mclk), .button_in(button), .rst(rst), .button_out(button_d));
+//#############################################################################
+
+//####### Controller FSM ######################################################
+	wire[7:0] spi_clk_div;
+	wire cpol;
+	wire cpha;
+	wire transfer_req;
+	wire transfer_ready;
+	wire transfer_done;
+	wire[7:0] to_agent;
+	wire[7:0] from_agent;
+	
+	wire[15:0] uart_clk_div;
+	wire tx_req;
+	wire[7:0] tx_data;
+	wire[7:0] rx_data;
+	wire tx_ready;
+	wire rx_ready;
+	
+	wire[15:0] hex_data;
+	
+	controller_fsm controller_i(
+		.clk(mclk),
+		.rst(rst),
+		
+		.spi_clk_div(spi_clk_div),
+		.cpol(cpol),
+		.cpha(cpha),
+		.transfer_req(transfer_req),
+		.transfer_ready(transfer_ready),
+		.transfer_done(transfer_done),
+		.to_agent(to_agent),
+		.from_agent(from_agent),
+		
+		.uart_clk_div(uart_clk_div),
+		.tx_req(tx_req),
+		.tx_data(tx_data),
+		.rx_data(rx_data),
+		.tx_ready(tx_ready),
+		.rx_ready(rx_ready),
+		
+		.led(led),
+		.cs_n(cs_n),
+		.hex_data(hex_data)
+	);
+//#############################################################################
+
+//####### UART ################################################################
+	uart_gen2 uart_i(
+		.clk(mclk),
+		.reset(rst),
+		.clk_div(uart_clk_div),
+		.tx_req(tx_req),
+		.tx_data(tx_data),
+		.rx(rxd),
+		.tx(txd),
+		.rx_data(rx_data),
+		.tx_ready(tx_ready),
+		.rx_ready(rx_ready));
+//#############################################################################
+
+//####### SPI #################################################################
+	spi_master spi_i(
+		.clk(mclk),
+		.rst(rst),
+
+		.clk_div(spi_clk_div),
+		.cpol(cpol),
+		.cpha(cpha),
+
+		.sck(sck),
+		.mosi(mosi),
+		.miso(miso),
+
+		.transfer_req(transfer_req),
+		.transfer_ready(transfer_ready),
+		.transfer_done(transfer_done),
+		.to_agent(to_agent),
+		.from_agent(from_agent));
+//#############################################################################
+
+//####### Hex Display #########################################################
+	Nexys2_hex_driver hex_inst(
+		.clk(mclk),
+		.seg0(hex_data[3:0]),
+		.seg1(hex_data[7:4]),
+		.seg2(hex_data[11:8]),
+		.seg3(hex_data[15:12]),
+		.dp(button_d),
+		.seg_sel(seg_sel),
+		.hex_out(seg)
+	);
+//#############################################################################
+
+endmodule

@@ -1,0 +1,212 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: Esteban Looser Rojas (ELR)
+// 
+// Create Date:    17:33:18 07/23/2023 
+// Design Name: 
+// Module Name:    dragonbridge_fsm 
+// Project Name:	DragonBridge
+// Target Devices: EP2C5T144C8N
+// Tool versions: Quartus 13.0
+// Description: Control I2C and SPI hosts over UART
+//
+// Dependencies: None
+//
+// Revision: 
+// Revision 0.01 - File Created
+// Additional Comments: 
+//
+//////////////////////////////////////////////////////////////////////////////////
+module dragonbridge_fsm(
+		input wire clk,
+		input wire rst,
+		
+		output reg[7:0] spi_clk_div,
+		output reg spi_cpol,
+		output reg spi_cpha,
+		output reg spi_transfer_req,
+		input wire spi_transfer_ready,
+		input wire spi_transfer_done,
+		output reg[7:0] spi_to_agent,
+		input wire[7:0] spi_from_agent,
+		
+		output reg[15:0] uart_clk_div,
+		output reg tx_req,
+		output reg[7:0] tx_data,
+		input wire[7:0] rx_data,
+		input wire tx_ready,
+		input wire rx_ready,
+		
+		output wire[7:0] led,
+		output reg cs_n,
+		output reg[15:0] hex_data
+	);
+
+	//HINT: Commands
+	localparam[7:0] CMD_NOP = 8'h00;		//Expects 0 bytes
+	localparam[7:0] CMD_TEST = 8'h01;	//Expects 1 byte
+	localparam[7:0] CMD_SPI_CLK = 8'h02;	//Expects 1 byte
+	localparam[7:0] CMD_SPI_MODE = 8'h03;	//Expects 1 byte
+	localparam[7:0] CMD_BAUD = 8'h04;	//Expects 2 bytes
+	localparam[7:0] CMD_CHIPSEL = 8'h05;	//Expects 1 byte
+	localparam[7:0] CMD_TRANSFER = 8'h06;	//Expects 1 byte
+	
+	//HINT: States
+	localparam[7:0] S_IDLE = 8'h00;
+	localparam[7:0] S_TEST = 8'h01;
+	localparam[7:0] S_TEST_REQ = 8'h02;
+	localparam[7:0] S_SPI_CLK = 8'h03;
+	localparam[7:0] S_SPI_MODE = 8'h04;
+	localparam[7:0] S_BAUD_L = 8'h05;
+	localparam[7:0] S_BAUD_H = 8'h06;
+	localparam[7:0] S_CHIPSEL = 8'h07;
+	localparam[7:0] S_TRANSFER_GET = 8'h08;
+	localparam[7:0] S_TRANSFER_SRQ = 8'h09;
+	localparam[7:0] S_TRANSFER_SGT = 8'h0A;
+	localparam[7:0] S_TRANSFER_URQ = 8'h0B;
+	
+	reg[7:0] state;
+	reg[7:0] command_count;
+	reg[7:0] baud_buf;
+	
+	assign led = command_count;
+	
+	always @(posedge clk or posedge rst)
+	begin
+		if(rst)
+		begin
+			spi_clk_div <= 8'h00;	//max speed
+			cpol <= 1'b0;
+			cpha <= 1'b0;
+			transfer_req <= 1'b0;
+			to_agent <= 8'h00;
+			uart_clk_div <= 16'd433;	//115200 baud
+			tx_req <= 1'b0;
+			tx_data <= 8'h00;
+			cs_n <= 1'b0;
+			hex_data <= 16'h0000;
+			state <= S_IDLE;
+			command_count <= 8'h00;
+			baud_buf <= 8'h00;
+		end
+		else
+		begin
+			case(state)
+			S_IDLE:
+			begin
+				if(rx_ready)
+				begin
+					command_count <= command_count + 8'h01;
+					case(rx_data)
+					CMD_NOP: ;
+					CMD_TEST: state <= S_TEST;
+					CMD_SPI_CLK: state <= S_SPI_CLK;
+					CMD_SPI_MODE: state <= S_SPI_MODE;
+					CMD_BAUD: state <= S_BAUD_L;
+					CMD_CHIPSEL: state <= S_CHIPSEL;
+					CMD_TRANSFER: state <= S_TRANSFER_GET;
+					default: ;
+					endcase
+				end
+			end
+			S_TEST:
+			begin
+				if(rx_ready)
+				begin
+					tx_data <= rx_data;
+					tx_req <= 1'b1;
+					state <= S_TEST_REQ;
+				end
+			end
+			S_TEST_REQ:
+			begin
+				if(tx_ready)
+				begin
+					tx_req <= 1'b0;
+					state <= S_IDLE;
+				end
+			end
+			S_SPI_CLK:
+			begin
+				if(rx_ready)
+				begin
+					spi_clk_div <= rx_data;
+					state <= S_IDLE;
+				end
+			end
+			S_SPI_MODE:
+			begin
+				if(rx_ready)
+				begin
+					cpha <= rx_data[0];
+					cpol <= rx_data[1];
+					state <= S_IDLE;
+				end
+			end
+			S_BAUD_L:
+			begin
+				if(rx_ready)
+				begin
+					baud_buf <= rx_data;
+					state <= S_BAUD_H;
+				end
+			end
+			S_BAUD_H:
+			begin
+				if(rx_ready)
+				begin
+					uart_clk_div <= {rx_data, baud_buf};
+					state <= S_IDLE;
+				end
+			end
+			S_CHIPSEL:
+			begin
+				if(rx_ready)
+				begin
+					cs_n <= rx_data[0];
+					state <= S_IDLE;
+				end
+			end
+			S_TRANSFER_GET:
+			begin
+				if(rx_ready)
+				begin
+					to_agent <= rx_data;
+					hex_data[15:8] <= rx_data;
+					transfer_req <= 1'b1;
+					state <= S_TRANSFER_SRQ;
+				end
+			end
+			S_TRANSFER_SRQ:
+			begin
+				if(transfer_ready)
+				begin
+					transfer_req <= 1'b0;
+					state <= S_TRANSFER_SGT;
+				end
+			end
+			S_TRANSFER_SGT:
+			begin
+				if(transfer_done)
+				begin
+					tx_data <= from_agent;
+					hex_data[7:0] <= from_agent;
+					tx_req <= 1'b1;
+					state <= S_TRANSFER_URQ;
+				end
+			end
+			S_TRANSFER_URQ:
+			begin
+				if(tx_ready)
+				begin
+					tx_req <= 1'b0;
+					state <= S_IDLE;
+				end
+			end
+			default: ;
+			endcase
+		end
+	end
+
+endmodule

@@ -1,0 +1,70 @@
+# Reading C:/altera/13.0sp1/modelsim_ase/tcl/vsim/pref.tcl 
+# do spi_controller_run_msim_rtl_verilog.do 
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Copying C:\altera\13.0sp1\modelsim_ase\win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# ** Warning: Copied C:\altera\13.0sp1\modelsim_ase\win32aloem/../modelsim.ini to modelsim.ini.
+#          Updated modelsim.ini.
+# 
+# vlog -vlog01compat -work work +incdir+C:/Users/Steve/Workspace/cy2m_spi_controller {C:/Users/Steve/Workspace/cy2m_spi_controller/uart_gen2.v}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module uart_gen2
+# 
+# Top level modules:
+# 	uart_gen2
+# vlog -vlog01compat -work work +incdir+C:/Users/Steve/Workspace/cy2m_spi_controller {C:/Users/Steve/Workspace/cy2m_spi_controller/top_level.v}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module spi_controller
+# 
+# Top level modules:
+# 	spi_controller
+# vlog -vlog01compat -work work +incdir+C:/Users/Steve/Workspace/cy2m_spi_controller {C:/Users/Steve/Workspace/cy2m_spi_controller/controller_fsm.v}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module controller_fsm
+# 
+# Top level modules:
+# 	controller_fsm
+# vlog -vlog01compat -work work +incdir+C:/Users/Steve/Workspace/cy2m_spi_controller {C:/Users/Steve/Workspace/cy2m_spi_controller/spi_host.v}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module spi_host
+# 
+# Top level modules:
+# 	spi_host
+# 
+# vlog -sv -work work +incdir+C:/Users/Steve/Workspace/cy2m_spi_controller {C:/Users/Steve/Workspace/cy2m_spi_controller/testbench.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module testbench
+# 
+# Top level modules:
+# 	testbench
+# vlog -vlog01compat -work work +incdir+C:/Users/Steve/Workspace/cy2m_spi_controller {C:/Users/Steve/Workspace/cy2m_spi_controller/spi_host.v}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module spi_host
+# 
+# Top level modules:
+# 	spi_host
+# vlog -vlog01compat -work work +incdir+C:/Users/Steve/Workspace/cy2m_spi_controller {C:/Users/Steve/Workspace/cy2m_spi_controller/spi_master.v}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module spi_master
+# 
+# Top level modules:
+# 	spi_master
+# 
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneii_ver -L rtl_work -L work -voptargs="+acc"  testbench
+# vsim -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneii_ver -L rtl_work -L work -voptargs=\"+acc\" -t 1ps testbench 
+# Loading sv_std.std
+# Loading work.testbench
+# Loading work.spi_master
+# 
+# add wave *
+# view structure
+# .main_pane.structure.interior.cs.body.struct
+# view signals
+# .main_pane.objects.interior.cs.body.tree
+# run 40 us
+run
+run

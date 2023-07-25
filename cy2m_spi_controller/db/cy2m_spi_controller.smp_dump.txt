@@ -1,0 +1,15 @@
+
+State Machine - |spi_controller|controller_fsm:controller_i|state
+Name state.S_TRANSFER_URQ state.S_TRANSFER_SGT state.S_TRANSFER_SRQ state.S_TRANSFER_GET state.S_CHIPSEL state.S_BAUD_H state.S_BAUD_L state.S_SPI_MODE state.S_SPI_CLK state.S_TEST_REQ state.S_TEST state.S_IDLE 
+state.S_IDLE 0 0 0 0 0 0 0 0 0 0 0 0 
+state.S_TEST 0 0 0 0 0 0 0 0 0 0 1 1 
+state.S_TEST_REQ 0 0 0 0 0 0 0 0 0 1 0 1 
+state.S_SPI_CLK 0 0 0 0 0 0 0 0 1 0 0 1 
+state.S_SPI_MODE 0 0 0 0 0 0 0 1 0 0 0 1 
+state.S_BAUD_L 0 0 0 0 0 0 1 0 0 0 0 1 
+state.S_BAUD_H 0 0 0 0 0 1 0 0 0 0 0 1 
+state.S_CHIPSEL 0 0 0 0 1 0 0 0 0 0 0 1 
+state.S_TRANSFER_GET 0 0 0 1 0 0 0 0 0 0 0 1 
+state.S_TRANSFER_SRQ 0 0 1 0 0 0 0 0 0 0 0 1 
+state.S_TRANSFER_SGT 0 1 0 0 0 0 0 0 0 0 0 1 
+state.S_TRANSFER_URQ 1 0 0 0 0 0 0 0 0 0 0 1 
