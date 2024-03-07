@@ -88,7 +88,6 @@ set_global_assignment -name VERILOG_FILE top_level.v
 set_global_assignment -name SYSTEMVERILOG_FILE testbench.sv
 set_global_assignment -name VERILOG_FILE spi_host.v
 set_global_assignment -name VERILOG_FILE I2C_phy_gen2.v
-set_global_assignment -name VERILOG_FILE controller_fsm.v
 set_global_assignment -name VERILOG_FILE dragonbridge_fsm.v
 set_global_assignment -name OUTPUT_PIN_LOAD 5 -section_id "3.3-V LVTTL"
 set_global_assignment -name OUTPUT_PIN_LOAD 10 -section_id "3.3-V PCI"

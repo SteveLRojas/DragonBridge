@@ -123,7 +123,7 @@ module dragonbridge_top(
 //####### UART ################################################################
 	uart_gen2 uart_i(
 		.clk(clk),
-		.reset(rst),
+		.rst(rst),
 		.clk_div(uart_clk_div),
 		.tx_req(uart_tx_req),
 		.tx_data(uart_tx_data),

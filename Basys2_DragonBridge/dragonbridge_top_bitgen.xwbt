@@ -1,0 +1,8 @@
+INTSTYLE=ise
+INFILE=/home/ise/VM_share/Basys2_DragonBridge/dragonbridge_top.ncd
+OUTFILE=/home/ise/VM_share/Basys2_DragonBridge/dragonbridge_top.bit
+FAMILY=Spartan3E
+PART=xc3s100e-4cp132
+WORKINGDIR=/home/ise/VM_share/Basys2_DragonBridge
+LICENSE=ISE
+USER_INFO=8416_11442_1478797146_620

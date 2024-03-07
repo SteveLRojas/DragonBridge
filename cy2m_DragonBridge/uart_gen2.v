@@ -1,6 +1,6 @@
 module uart_gen2(
 		input wire clk,
-		input wire reset,
+		input wire rst,
 		input wire[15:0] clk_div,
 		input wire tx_req,
 		input wire[7:0] tx_data,
@@ -8,7 +8,8 @@ module uart_gen2(
 		output wire tx,
 		output reg[7:0] rx_data,
 		output reg tx_ready,
-		output reg rx_ready);
+		output reg rx_ready
+	);
 
 	reg[15:0] rx_timer;
 	reg[9:0] rx_frame;
@@ -25,30 +26,27 @@ module uart_gen2(
 	assign rx_time = (rx_timer == clk_div);
 	assign tx = tx_frame[0];
 
-	initial
+	always @(posedge clk or posedge rst)
 	begin
-		rx_s = 1'b1;
-		rx_frame = 10'b1111111111;
-	end
-
-	always @(posedge clk)
-	begin
-		rx_s <= rx;
-		prev_tx_req <= tx_req;
-		if(reset)
+		if(rst)
 		begin
-			rx_timer <= 0;
-			rx_active <= 0;
-			tx_active <= 0;
-			tx_timer <= 0;
+			rx_data <= 0;
 			tx_ready <= 0;
 			rx_ready <= 0;
-			rx_data <= 0;
-			tx_frame <= 10'b1111111111;
+			rx_timer <= 0;
 			rx_frame <= 10'b1111111111;
+			rx_active <= 0;
+			tx_timer <= 0;
+			tx_frame <= 10'b1111111111;
+			tx_active <= 0;
+			rx_s <= 1'b1;
+			prev_tx_req <= 1'b0;
 		end
 		else
 		begin
+			rx_s <= rx;
+			prev_tx_req <= tx_req;
+			
 			if(rx_active)
 			begin
 				if(rx_time)
@@ -64,8 +62,10 @@ module uart_gen2(
 				rx_timer <= {1'b0, clk_div[15:1]};	//half period
 				rx_frame <= 10'b1111111111;
 			end
+			
 			if(~rx_s)	//detect start bit
 				rx_active <= 1'b1;
+			
 			if(~rx_frame[0] & rx_active)
 			begin
 				rx_active <= 1'b0;
@@ -90,11 +90,13 @@ module uart_gen2(
 				tx_timer <= 0;
 				tx_frame <= 10'b1111111111;
 			end
+			
 			if(tx_req & (~prev_tx_req))
 			begin
 				tx_active <= 1'b1;
 				tx_frame <= {1'b1, tx_data, 1'b0};
 			end
+			
 			if((tx_frame[9:1] == 9'h00) && tx_time)
 			begin
 				tx_active <= 1'b0;
