@@ -12,7 +12,7 @@ module I2C_phy_gen2(
 		input wire[7:0] data_from_master,
 		output wire[7:0] data_from_slave,
 		inout wire i2c_sda,
-		output wire i2c_scl);
+		inout wire i2c_scl);
 		
 	wire clk_p1;	//2MHz clock phase 1
 	wire clk_p2;	//2MHz clock phase 2
@@ -45,16 +45,26 @@ module I2C_phy_gen2(
 	assign data_from_slave = rx_frame[8:1];
 	assign slave_ack = ~rx_frame[0];
 
-	always @(posedge clk or posedge rst)
+	initial
 	begin
+		clk_i2c = 1'b1;
+		tx_frame = 11'b111_1111_1111;
+		clk_active = 1'b0;
+		tx_active = 1'b0;
+		rx_active = 1'b0;
+	end
+
+	always @(posedge clk)
+	begin
+		ready <= 1'b0;
 		if(rst)
 		begin
-			ready <= 1'b0;
+			clk_cnt <= 16'h0000;
 			clk_i2c <= 1'b1;
+			tx_frame[10] <= 1'b1;
 			clk_active <= 1'b0;
 			tx_active <= 1'b0;
 			rx_active <= 1'b0;
-			clk_cnt <= 16'h0000;
 			prev_start_req <= 1'b0;
 			prev_stop_req <= 1'b0;
 			prev_write_req <= 1'b0;
@@ -63,12 +73,9 @@ module I2C_phy_gen2(
 			stop_req_flag <= 1'b0;
 			write_req_flag <= 1'b0;
 			read_req_flag <= 1'b0;
-			tx_frame <= 11'b111_1111_1111;
-			rx_frame <= 9'h00;
 		end
 		else
 		begin
-			ready <= 1'b0;
 			prev_start_req <= start_req;
 			prev_stop_req <= stop_req;
 			prev_write_req <= write_req;
